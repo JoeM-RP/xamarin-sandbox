@@ -5,12 +5,29 @@ using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using UIKit;
 using Sandbox.Abstractions;
 using Sandbox.iOS.Services;
+using System.Diagnostics;
 
 [assembly: Xamarin.Forms.Dependency(typeof(IdentityService))]
 namespace Sandbox.iOS.Services
 {
     public class IdentityService : IIdentityService
     {
+		public async Task<AuthenticationResult> Authorize()
+		{
+			try
+			{
+                var data = await this.SignIn(App.AadAuthority, App.AadResourceUri, App.AadApplicationId, App.AadRedirectUri);
+				Debug.WriteLine($"[GetPrimaryUser] Success = {data.UserInfo.GivenName} {data.UserInfo.FamilyName}");
+
+				return data;
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine($"[GetPrimaryUser] Error = {ex.Message}");
+				throw;
+			}
+		}
+
 		public async Task<AuthenticationResult> SignIn(string authority, string resource, string clientId, string returnUri)
 		{
 			var authContext = new AuthenticationContext(authority);

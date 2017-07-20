@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ReactiveUI;
+using Sandbox.Abstractions;
 using Sandbox.ViewModels;
 using Xamarin.Forms;
 using Xamvvm;
@@ -25,6 +26,8 @@ namespace Sandbox
 
 	public partial class App : Application
     {
+        IIdentityService Identity;
+
         public App()
         {
             InitializeComponent();
@@ -41,12 +44,16 @@ namespace Sandbox
 
         private void InitializeServices()
         {
+            Identity =  DependencyService.Get<IIdentityService>();
+
 			// Locator.CurrentMutable.RegisterLazySingleton(() => new SomeService(), typeof(ISomeService));
 		}
 
         protected override void OnStart()
         {
             // Handle when your app starts
+
+            // TODO: Refresh token
         }
 
         protected override void OnSleep()
@@ -57,6 +64,8 @@ namespace Sandbox
         protected override void OnResume()
         {
             // Handle when your app resumes
+
+            // TODO: Refresh token
         }
     }
 }
