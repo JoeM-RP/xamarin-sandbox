@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using ReactiveUI;
 using Sandbox.Abstractions;
+using Sandbox.Services;
 using Sandbox.ViewModels;
+using Splat;
 using Xamarin.Forms;
 using Xamvvm;
 
@@ -38,7 +40,6 @@ namespace Sandbox
 
 			factory.RegisterNavigationPage<AppShellNavigationPageModel>(() => this.GetPageFromCache<MainPageViewModel>());
 
-
             MainPage = this.GetPageAsNewInstance<AppShellNavigationPageModel>() as Page;
 		}
 
@@ -46,7 +47,7 @@ namespace Sandbox
         {
             Identity =  DependencyService.Get<IIdentityService>();
 
-			// Locator.CurrentMutable.RegisterLazySingleton(() => new SomeService(), typeof(ISomeService));
+			Locator.CurrentMutable.RegisterLazySingleton(() => new RoomsService(), typeof(IRoomsService));
 		}
 
         protected override void OnStart()
@@ -63,9 +64,9 @@ namespace Sandbox
 
         protected override void OnResume()
         {
-            // Handle when your app resumes
+			// Handle when your app resumes
 
-            // TODO: Refresh token
-        }
+			// TODO: Refresh token
+		}
     }
 }

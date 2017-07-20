@@ -16,7 +16,7 @@ namespace Sandbox.iOS.Services
 		{
 			try
 			{
-                var data = await this.SignIn(App.AadAuthority, App.AadResourceUri, App.AadApplicationId, App.AadRedirectUri);
+                var data = await this.SignIn(App.AadAuthority, App.AppServiceUrl, App.AadApplicationId, App.AadRedirectUri);
 				Debug.WriteLine($"[GetPrimaryUser] Success = {data.UserInfo.GivenName} {data.UserInfo.FamilyName}");
 
 				return data;
