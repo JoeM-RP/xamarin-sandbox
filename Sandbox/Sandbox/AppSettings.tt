@@ -1,0 +1,19 @@
+﻿﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using Xamarin.Forms;
+
+namespace Sandbox
+{
+    public partial class App : Application 
+    {
+        public static readonly string AppServiceUrl = "https://somedomain.azurewebsites.net/";
+        public static readonly string AadResourceId = "<#= Guid.Empty.ToString() #>";
+        public static readonly string AadClientId = "<#= Guid.Empty.ToString() #>";
+        public static readonly string AadTenantId = "<#= Guid.Empty.ToString() #>";
+        public static readonly string AadRedirectUri = "http://somedomain.azurewebsites.net/.auth/login/done";
+        public static readonly string AadAuthority = "https://login.microsoftonline.com/<#= Guid.Empty.ToString() #>/";
+    }
+}
