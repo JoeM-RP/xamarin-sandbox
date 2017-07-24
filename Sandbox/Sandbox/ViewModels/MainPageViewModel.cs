@@ -16,6 +16,8 @@ using Xamvvm;
 using System.Linq;
 using Common.Output;
 using Common.Enums;
+using System.IO;
+using System.Text;
 
 namespace Sandbox.ViewModels
 {
@@ -36,9 +38,17 @@ namespace Sandbox.ViewModels
 			set { this.RaiseAndSetIfChanged(ref _info, value); }
 		}
 
+        ImageSource _image;
+        public ImageSource Image
+		{
+            get { return _image; }
+			set { this.RaiseAndSetIfChanged(ref _image, value); }
+		}
+
         // Commands
         public ReactiveCommand<Unit, bool> Navigate { get; }
         public ReactiveCommand<bool, Result<MeModel>> GetUserData { get; }
+        public ReactiveCommand<MeModel, Result<string>> GetUserPhoto { get; }
 
         public MainPageViewModel()
         {
@@ -49,6 +59,11 @@ namespace Sandbox.ViewModels
             {
                 return (await service.GetUserInfo());
             });
+
+            GetUserPhoto = ReactiveCommand.CreateFromTask<MeModel, Result<string>>(async _ =>
+			{
+                return (await service.GetUserPhoto());
+			});
 
             // Binding
             InitRxBindings();
@@ -74,13 +89,31 @@ namespace Sandbox.ViewModels
                 })
                 .DisposeWith(SubscriptionDisposables);
 
+            GetUserPhoto
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Subscribe(result =>
+                {
+					if (result.Type != ResultType.Ok)
+						throw new Exception(result.Type.ToString());
+
+
+                    //Image = ImageSource.FromStream(() => new MemoryStream(Convert.ToByte(result.Data, 16)));
+                })
+                .DisposeWith(SubscriptionDisposables);
+
+			this.WhenAnyValue(vm => vm.Info)
+				.Throttle(TimeSpan.FromSeconds(.5), TaskPoolScheduler.Default)
+                .Where(info => info != null)
+                .InvokeCommand(GetUserPhoto)
+                .DisposeWith(SubscriptionDisposables);
+
 
 			// Behaviors
-            Observable.Merge(GetSignOn.IsExecuting, GetUserData.IsExecuting)
+            Observable.Merge(GetSignOn.IsExecuting, GetUserData.IsExecuting, GetUserPhoto.IsExecuting)
 				.ToProperty(this, vm => vm.IsBusy, out _busy);
 
 			// Exceptions
-            Observable.Merge(GetSignOn.ThrownExceptions, GetUserData.ThrownExceptions)
+            Observable.Merge(GetSignOn.ThrownExceptions, GetUserData.ThrownExceptions, GetUserPhoto.ThrownExceptions)
 				.Subscribe(async ex =>
 				{
 					Debug.WriteLine($"[{ex.Source}] Error = {ex.Message}");

@@ -6,7 +6,7 @@
     <ScrollView>
         <StackLayout Margin="15,10">
             <Grid>
-                <Image HeightRequest="150" WidthRequest="150" HorizontalOptions="Center" BackgroundColor="Silver"/>
+                <Image Source="{Binding Image}" HeightRequest="150" WidthRequest="150" HorizontalOptions="Center" BackgroundColor="Silver"/>
                 <ActivityIndicator IsRunning="{Binding IsBusy}" HorizontalOptions="Center" VerticalOptions="Center"/>
             </Grid>
             <AbsoluteLayout>

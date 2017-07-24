@@ -22,9 +22,14 @@ namespace Sandbox.Services
             return new Result<MeModel>(result);
         }
 
-        public Task<Result<object>> GetUserPhoto()
+        public async Task<Result<string>> GetUserPhoto()
         {
-            throw new NotImplementedException();
+			var token = App.Authorization.AccessToken;
+
+			var queryUrl = $"https://graph.microsoft.com/v1.0/me/photo/$value";
+			var response = await GetHttpsEndpoint(queryUrl, token);
+
+            return new Result<string>(response);
         }
 
         protected override Task<string> HandleCallFailure(HttpResponseMessage message)
