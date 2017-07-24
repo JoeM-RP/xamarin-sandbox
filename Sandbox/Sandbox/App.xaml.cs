@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using ReactiveUI;
 using Sandbox.Abstractions;
 using Sandbox.Services;
@@ -28,7 +29,10 @@ namespace Sandbox
 
 	public partial class App : Application
     {
-        IIdentityService Identity;
+        IIdentityService IdentityService;
+
+		public static string UserName;
+		public static AuthenticationResult Authorization;
 
         public App()
         {
@@ -45,9 +49,9 @@ namespace Sandbox
 
         private void InitializeServices()
         {
-            Identity =  DependencyService.Get<IIdentityService>();
+            IdentityService =  DependencyService.Get<IIdentityService>();
 
-			Locator.CurrentMutable.RegisterLazySingleton(() => new RoomsService(), typeof(IRoomsService));
+            Locator.CurrentMutable.RegisterLazySingleton(() => new UserService(), typeof(IUserService));
 		}
 
         protected override void OnStart()

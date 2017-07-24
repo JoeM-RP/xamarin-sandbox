@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Sandbox.Models
+namespace Common.Models
 {
     public class GraphValueBaseModel
     {

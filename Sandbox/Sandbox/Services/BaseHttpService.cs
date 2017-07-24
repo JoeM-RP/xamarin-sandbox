@@ -5,15 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using ModernHttpClient;
 using Newtonsoft.Json;
+using Common.Models;
+using Common.Output;
 
 namespace Sandbox.Services
 {
-    public class BaseGraphService
+    public abstract class BaseHttpService
     {
-        public BaseGraphService()
-        {
-        }
-
 		internal async Task<string> GetHttpsEndpoint(string endpoint, string token)
 		{
 			using (HttpClient client = new HttpClient(new NativeMessageHandler()))
@@ -22,7 +20,7 @@ namespace Sandbox.Services
 				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
 
 				var response = await client.GetAsync(endpoint);
-				Debug.WriteLine($"[GetHttpsResponse] Result = {response.ReasonPhrase}");
+                Debug.WriteLine($"[GetHttpsResponse] Endpoint = {endpoint} Result = {response.ReasonPhrase}");
 
 				if (response.IsSuccessStatusCode && response.Content != null)
 				{
@@ -78,14 +76,7 @@ namespace Sandbox.Services
         /// </summary>
         /// <returns>The call failure.</returns>
         /// <param name="message">Message.</param>
-		private Task<string> HandleCallFailure(HttpResponseMessage message)
-		{
-            // TODO: Handle various failure cases and respond appropriately
-			switch (message.StatusCode)
-			{
-				default:
-                    return Task.FromResult(message.ReasonPhrase);
-			}
-		}
+        protected abstract Task<string> HandleCallFailure(HttpResponseMessage message);
+
     }
 }

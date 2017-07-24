@@ -26,20 +26,6 @@ namespace Sandbox.ViewModels
 			set { this.RaiseAndSetIfChanged(ref _pageTitle, value); }
 		}
 
-		string _userName;
-		public string UserName
-		{
-			get { return _userName; }
-			set { this.RaiseAndSetIfChanged(ref _userName, value); }
-		}
-
-		AuthenticationResult _authorization;
-		public AuthenticationResult Authorization
-		{
-			get { return _authorization; }
-			set { this.RaiseAndSetIfChanged(ref _authorization, value); }
-		}
-
 		// Commands
 		public ReactiveCommand<Unit, bool> GetSignOn { get; set; }
 		public ReactiveCommand<Unit, bool> GetSignOff { get; set; }
@@ -55,8 +41,8 @@ namespace Sandbox.ViewModels
 
 			GetSignOff = ReactiveCommand.CreateFromTask(_ =>
 			{
-				this.UserName = null;
-				this.Authorization = null;
+				App.UserName = null;
+				App.Authorization = null;
 
 				return ExecuteSignOffCommand();
 			});
@@ -69,8 +55,8 @@ namespace Sandbox.ViewModels
 			try
 			{
 				var identity = DependencyService.Get<IIdentityService>();
-                this.Authorization = await identity.Authorize();
-				this.UserName = Authorization.UserInfo.GivenName + " " + Authorization.UserInfo.FamilyName;
+                App.Authorization = await identity.Authorize();
+				App.UserName = App.Authorization.UserInfo.GivenName + " " + App.Authorization.UserInfo.FamilyName;
 
 				return true;
 			}

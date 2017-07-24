@@ -1,11 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Sandbox.Views.MainPage" Title="{Binding PageTitle}">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding GetSignOn}" Text="Sign In" />
+        <ToolbarItem Command="{Binding GetSignOn}" Text="Sign On" />
     </ContentPage.ToolbarItems>
-    <StackLayout>
-        <SearchBar Placeholder="Room Name"/>
-        <ListView>
-        </ListView>
-    </StackLayout>
+    <ScrollView>
+        <StackLayout Margin="15,10">
+            <Grid>
+                <Image HeightRequest="150" WidthRequest="150" HorizontalOptions="Center" BackgroundColor="Silver"/>
+                <ActivityIndicator IsRunning="{Binding IsBusy}" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Grid>
+            <AbsoluteLayout>
+                <Label Text="Name:" AbsoluteLayout.LayoutBounds="0,20,.3,40" AbsoluteLayout.LayoutFlags="WidthProportional" />
+                <Entry Text="{Binding Info.displayName}" IsEnabled="False" AbsoluteLayout.LayoutBounds="1,10,.75,40" AbsoluteLayout.LayoutFlags="XProportional,WidthProportional" />
+            </AbsoluteLayout>
+            <AbsoluteLayout>
+                <Label Text="Title:" AbsoluteLayout.LayoutBounds="0,20,.3,40" AbsoluteLayout.LayoutFlags="WidthProportional" />
+                <Entry Text="{Binding Info.jobTitle}" IsEnabled="False" AbsoluteLayout.LayoutBounds="1,10,.75,40" AbsoluteLayout.LayoutFlags="XProportional,WidthProportional" />
+            </AbsoluteLayout>
+            <AbsoluteLayout>
+                <Label Text="E-Mail:" AbsoluteLayout.LayoutBounds="0,20,.3,40" AbsoluteLayout.LayoutFlags="WidthProportional" />
+                <Entry Text="{Binding Info.mail}" IsEnabled="False" AbsoluteLayout.LayoutBounds="1,10,.75,40" AbsoluteLayout.LayoutFlags="XProportional,WidthProportional" />
+            </AbsoluteLayout>
+            <AbsoluteLayout>
+                <Label Text="Office:" AbsoluteLayout.LayoutBounds="0,20,.3,40" AbsoluteLayout.LayoutFlags="WidthProportional" />
+                <Entry Text="{Binding Info.officeLocation}" IsEnabled="False" AbsoluteLayout.LayoutBounds="1,10,.75,40" AbsoluteLayout.LayoutFlags="XProportional,WidthProportional" />
+            </AbsoluteLayout>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

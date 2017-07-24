@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Sandbox.Models
+namespace Common.Models
 {
     public class GraphResponseModel<T> where T : GraphValueBaseModel
     {
@@ -10,7 +10,7 @@ namespace Sandbox.Models
         {
         }
 
-		public IList<T> value { get; set; }
+		public IList<T> Value { get; set; }
 
 		[JsonProperty("@odata.context")]
 		public string Context { get; set; }

@@ -46,22 +46,15 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Abstractions\IIdentityService.cs" />
-    <Compile Include="Services\RoomsService.cs" />
     <Compile Include="AppSettings.cs">
       <DependentUpon>AppSettings.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EventModel.cs" />
-    <Compile Include="Models\TimeModel.cs" />
-    <Compile Include="Models\AttendeeModel.cs" />
-    <Compile Include="Models\StatusModel.cs" />
-    <Compile Include="Models\EmailModel.cs" />
-    <Compile Include="Models\OrganizerModel.cs" />
-    <Compile Include="Models\ResponseModel.cs" />
-    <Compile Include="Models\LocationModel.cs" />
-    <Compile Include="Models\GraphResponseModel.cs" />
-    <Compile Include="Models\GraphValueBaseModel.cs" />
-    <Compile Include="Services\IRoomsService.cs" />
-    <Compile Include="Services\BaseGraphService.cs" />
+    <Compile Include="Services\BaseHttpService.cs" />
+    <Compile Include="Behaviors\EntryLengthValidator.cs" />
+    <Compile Include="Endpoints.cs" />
+    <Compile Include="Behaviors\StatusIndicator.cs" />
+    <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\IUserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.xaml">
@@ -135,8 +128,14 @@
     <Folder Include="Services\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Views\" />
-    <Folder Include="Models\" />
     <Folder Include="Converters\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.csproj">
+      <Project>{93A474C2-156F-422E-940E-00010F3B12F0}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

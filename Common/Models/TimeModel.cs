@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Sandbox.Models
+namespace Common.Models
 {
     public class TimeModel
     {
