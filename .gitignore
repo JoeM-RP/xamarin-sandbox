@@ -263,3 +263,7 @@ paket-files/
 __pycache__/
 *.pyc
 
+/Sandbox/Sandbox.Android/Sandbox.Android.csproj.bak
+*.bak
+/Sandbox/Sandbox/AppSettings.cs
+/Sandbox/AppSettings.cs
