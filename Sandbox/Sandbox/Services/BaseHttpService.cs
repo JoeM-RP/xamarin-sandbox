@@ -71,6 +71,25 @@ namespace Sandbox.Services
 			}
 		}
 
+		internal async Task<byte[]> GetHttpsByteArrayEndpoint(string endpoint, string token)
+		{
+			using (HttpClient client = new HttpClient(new NativeMessageHandler()))
+			{
+				client.Timeout = new TimeSpan(0, 2, 0);
+				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
+
+				var response = await client.GetAsync(endpoint);
+				Debug.WriteLine($"[GetHttpsResponse] Endpoint = {endpoint} Result = {response.ReasonPhrase}");
+
+                if (response.IsSuccessStatusCode && response.Content != null)
+                {
+                    return await response.Content.ReadAsByteArrayAsync();
+                }
+                else
+                    throw new NotImplementedException();
+			}
+		}
+
         /// <summary>
         /// Handles the call failure.
         /// </summary>

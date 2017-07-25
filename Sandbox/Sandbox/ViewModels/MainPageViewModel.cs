@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -48,7 +48,7 @@ namespace Sandbox.ViewModels
         // Commands
         public ReactiveCommand<Unit, bool> Navigate { get; }
         public ReactiveCommand<bool, Result<MeModel>> GetUserData { get; }
-        public ReactiveCommand<MeModel, Result<string>> GetUserPhoto { get; }
+        public ReactiveCommand<MeModel, Result<byte[]>> GetUserPhoto { get; }
 
         public MainPageViewModel()
         {
@@ -60,7 +60,7 @@ namespace Sandbox.ViewModels
                 return (await service.GetUserInfo());
             });
 
-            GetUserPhoto = ReactiveCommand.CreateFromTask<MeModel, Result<string>>(async _ =>
+            GetUserPhoto = ReactiveCommand.CreateFromTask<MeModel, Result<byte[]>>(async _ =>
 			{
                 return (await service.GetUserPhoto());
 			});
@@ -93,11 +93,7 @@ namespace Sandbox.ViewModels
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(result =>
                 {
-					if (result.Type != ResultType.Ok)
-						throw new Exception(result.Type.ToString());
-
-
-                    //Image = ImageSource.FromStream(() => new MemoryStream(Convert.ToByte(result.Data, 16)));
+                    Image = ImageSource.FromStream(() => new MemoryStream(result.Data));
                 })
                 .DisposeWith(SubscriptionDisposables);
 
@@ -112,15 +108,20 @@ namespace Sandbox.ViewModels
             Observable.Merge(GetSignOn.IsExecuting, GetUserData.IsExecuting, GetUserPhoto.IsExecuting)
 				.ToProperty(this, vm => vm.IsBusy, out _busy);
 
-			// Exceptions
+            // Exceptions
             Observable.Merge(GetSignOn.ThrownExceptions, GetUserData.ThrownExceptions, GetUserPhoto.ThrownExceptions)
-				.Subscribe(async ex =>
-				{
-					Debug.WriteLine($"[{ex.Source}] Error = {ex.Message}");
+                .Subscribe(async ex =>
+                {
+                    Debug.WriteLine($"[{ex.Source}] Error = {ex.Message}");
 
-					var result = await Interactions.Errors.Handle(ex);
-				})
-				.DisposeWith(SubscriptionDisposables);
+                    var result = await Interactions.Errors.Handle(ex);
+
+                    if (result == ErrorRecoveryOption.Retry)
+                    {
+                        // TODO: do something to retry
+                    }
+                })
+                .DisposeWith(SubscriptionDisposables);
         }
     }
 }

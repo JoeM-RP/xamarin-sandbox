@@ -12,6 +12,18 @@ namespace Sandbox.Views
         public MainPage()
         {
             InitializeComponent();
+
+			Interactions.Errors.RegisterHandler(
+			async interaction =>
+			{
+				var action = await DisplayAlert(
+					$"Error: {interaction.Input.Message}",
+					"Sandbox ran in to an issue and couldn't complete the operation. If you're experiencing connectivity issues, not all functionality will be available",
+					"Retry",
+					"Cancel");
+
+				interaction.SetOutput(action ? ErrorRecoveryOption.Retry : ErrorRecoveryOption.Cancel);
+			});
         }
 
         public MainPageViewModel ViewModel { get; set; }

@@ -8,6 +8,6 @@ namespace Sandbox.Services
     public interface IUserService
     {
         Task<Result<MeModel>> GetUserInfo();
-        Task<Result<string>> GetUserPhoto();
+        Task<Result<byte[]>> GetUserPhoto();
     }
 }
