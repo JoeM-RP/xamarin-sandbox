@@ -25,7 +25,22 @@ namespace Sandbox.iOS
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 
-            return base.FinishedLaunching(app, options);
+            var result = base.FinishedLaunching(app, options);
+
+			#region Navigation Bar Appearance
+			var brandColor = UIColor.FromRGB(110, 110, 112);
+
+			UINavigationBar.Appearance.BarTintColor = brandColor;
+			UINavigationBar.Appearance.SetTitleTextAttributes(new UITextAttributes()
+			{
+				TextColor = UIColor.White
+			});
+			UINavigationBar.Appearance.TintColor = UIColor.White;
+
+			app.KeyWindow.TintColor = brandColor;
+			#endregion
+
+			return result;
         }
     }
 }
