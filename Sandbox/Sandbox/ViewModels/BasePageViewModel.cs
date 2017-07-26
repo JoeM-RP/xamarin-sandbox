@@ -5,6 +5,7 @@ using System.Reactive.Disposables;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using Sandbox.Abstractions;
 using Xamarin.Forms;
 using Xamvvm;
@@ -19,12 +20,8 @@ namespace Sandbox.ViewModels
 		public bool IsBusy => _busy.Value;
 
         // Properties
-		private string _pageTitle;
-		public string PageTitle
-		{
-			get { return _pageTitle; }
-			set { this.RaiseAndSetIfChanged(ref _pageTitle, value); }
-		}
+        [Reactive]
+        public string PageTitle { get; set; }
 
 		// Commands
 		public ReactiveCommand<Unit, bool> GetSignOn { get; set; }

@@ -18,32 +18,18 @@ using Common.Output;
 using Common.Enums;
 using System.IO;
 using System.Text;
+using ReactiveUI.Fody.Helpers;
 
 namespace Sandbox.ViewModels
 {
     public class MainPageViewModel : BasePageViewModel
     {
         // Properties
-        ObservableCollection<EventModel> _directory = new ObservableCollection<EventModel>();
-        public ObservableCollection<EventModel> Directory
-        {
-            get { return _directory; }
-            set { this.RaiseAndSetIfChanged(ref _directory, value); }
-        }
+        [Reactive]
+        public MeModel Info { get; set; }
 
-        MeModel _info;
-        public MeModel Info
-		{
-			get { return _info; }
-			set { this.RaiseAndSetIfChanged(ref _info, value); }
-		}
-
-        ImageSource _image;
-        public ImageSource Image
-		{
-            get { return _image; }
-			set { this.RaiseAndSetIfChanged(ref _image, value); }
-		}
+        [Reactive]
+        public ImageSource Image { get; set;  }
 
         // Commands
         public ReactiveCommand<Unit, bool> Navigate { get; }
