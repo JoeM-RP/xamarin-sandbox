@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Sandbox.Views.MainPage" Title="{Binding PageTitle}" BackgroundColor="{StaticResource LightGray}">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:behaviors="clr-namespace:Sandbox.Behaviors" x:Class="Sandbox.Views.MainPage" Title="{Binding PageTitle}" BackgroundColor="{StaticResource LightGray}">
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding GetSignOn}" Text="Sign On" />
     </ContentPage.ToolbarItems>
@@ -24,6 +24,15 @@
             <AbsoluteLayout>
                 <Label Text="Office:" AbsoluteLayout.LayoutBounds="0,20,.3,40" AbsoluteLayout.LayoutFlags="WidthProportional" />
                 <Entry Text="{Binding Info.officeLocation}" IsEnabled="False" AbsoluteLayout.LayoutBounds="1,10,.75,40" AbsoluteLayout.LayoutFlags="XProportional,WidthProportional" />
+            </AbsoluteLayout>
+            <AbsoluteLayout>
+                <Label Text="Phone:" AbsoluteLayout.LayoutBounds="0,20,.3,40" AbsoluteLayout.LayoutFlags="WidthProportional" />
+                <Entry Text="{Binding Phone}" AbsoluteLayout.LayoutBounds="1,10,.75,40" AbsoluteLayout.LayoutFlags="XProportional,WidthProportional" Keyboard="Telephone">
+                    <Entry.Behaviors>
+                        <behaviors:PhoneNumberMaskBehavior x:Name="PhoneMask" />
+                        <behaviors:EntryLengthValidatorBehavior MinLength="12" MaxLength="12" />
+                    </Entry.Behaviors>
+                </Entry>
             </AbsoluteLayout>
         </StackLayout>
     </ScrollView>

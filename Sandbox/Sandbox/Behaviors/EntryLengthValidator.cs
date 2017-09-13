@@ -7,7 +7,7 @@ using Xamarin.Forms;
 
 namespace Sandbox.Behaviors
 {
-    public class EntryLengthValidator : Behavior<Entry>
+    public class EntryLengthValidatorBehavior : Behavior<Entry>
     {
         public int MaxLength { get; set; }
 		public int MinLength { get; set; } = 0;

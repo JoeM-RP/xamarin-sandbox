@@ -55,6 +55,7 @@
     <Compile Include="Behaviors\StatusIndicator.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\IUserService.cs" />
+    <Compile Include="Behaviors\PhoneNumberMaskBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.xaml">

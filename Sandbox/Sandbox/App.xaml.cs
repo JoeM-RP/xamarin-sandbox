@@ -44,7 +44,8 @@ namespace Sandbox
 
 			factory.RegisterNavigationPage<AppShellNavigationPageModel>(() => this.GetPageFromCache<MainPageViewModel>());
 
-            MainPage = this.GetPageAsNewInstance<AppShellNavigationPageModel>() as Page;
+			MainPage = this.GetPageAsNewInstance<AppShellNavigationPageModel>() as Page;
+			(MainPage as NavigationPage).BarTextColor = Color.White;
 		}
 
         private void InitializeServices()
